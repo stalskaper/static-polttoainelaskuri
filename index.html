@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carpool Calculator</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .calculator-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 440px;
+        }
+        h2 {
+            color: #dc3545; /* Matches the red heading from your layout */
+            margin-top: 0;
+            margin-bottom: 25px;
+            font-size: 1.6rem;
+            text-align: left;
+            font-weight: 700;
+        }
+        .input-group {
+            display: grid;
+            grid-template-columns: 1fr 100px 90px;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #e9ecef;
+            padding-bottom: 12px;
+        }
+        .input-group:last-of-type {
+            border-bottom: none;
+        }
+        label {
+            font-weight: 600;
+            color: #343a40;
+            font-size: 0.95rem;
+        }
+        input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 1rem;
+            text-align: center;
+        }
+        input:focus {
+            outline: none;
+            border-color: #dc3545;
+            box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.15);
+        }
+        .unit {
+            color: #495057;
+            font-size: 0.9rem;
+            text-align: left;
+            white-space: nowrap;
+        }
+        button {
+            width: auto;
+            background-color: #e9ecef;
+            color: #212529;
+            border: 1px solid #adb5bd;
+            padding: 6px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            transition: all 0.2s ease;
+        }
+        button:hover {
+            background-color: #deb2b6;
+            border-color: #dc3545;
+        }
+        .result-group {
+            display: grid;
+            grid-template-columns: 1fr 100px 90px;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #dee2e6;
+        }
+        .result-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #212529;
+            text-align: center;
+            background-color: #f1f3f5;
+            padding: 6px 12px;
+            border-radius: 6px;
+            min-height: 28px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="calculator-card">
+        <h2>Kimppakyytilaskuri</h2>
+        
+        <!-- Input 1: Total Fuel Consumed -->
+        <div class="input-group">
+            <label for="total-fuel">Total fuel consumed:</label>
+            <input type="number" id="total-fuel" placeholder="0" min="0" step="any">
+            <span class="unit">liters</span>
+        </div>
+
+        <!-- Input 2: Fuel Price -->
+        <div class="input-group">
+            <label for="fuel-price">Fuel price:</label>
+            <input type="number" id="fuel-price" placeholder="0.00" min="0" step="0.01">
+            <span class="unit">euro / liter</span>
+        </div>
+
+        <!-- Input 3: Number of Passengers -->
+        <div class="input-group">
+            <label for="passengers">Passengers:</label>
+            <input type="number" id="passengers" value="1" min="1">
+            <span class="unit">people</span>
+        </div>
+
+        <!-- Action Button -->
+        <button type="button" onclick="calculateCost()">Laske!</button>
+
+        <!-- Output Display -->
+        <div class="result-group">
+            <label>Trip cost:</label>
+            <div id="cost-display" class="result-value">-</div>
+            <span class="unit">euro / person</span>
+        </div>
+    </div>
+
+    <script>
+        function calculateCost() {
+            const totalFuel = parseFloat(document.getElementById('total-fuel').value) || 0;
+            const fuelPrice = parseFloat(document.getElementById('fuel-price').value) || 0;
+            const passengers = parseInt(document.getElementById('passengers').value) || 1;
+
+            // Math Logic: (Total Liters * Price per Liter) / Total People
+            if (passengers > 0) {
+                const totalCost = (totalFuel * fuelPrice) / passengers;
+                document.getElementById('cost-display').textContent = totalCost.toFixed(2);
+            } else {
+                document.getElementById('cost-display').textContent = "0.00";
+            }
+        }
+    </script>
+</body>
+</html>
